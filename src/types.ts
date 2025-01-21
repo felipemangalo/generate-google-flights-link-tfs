@@ -142,28 +142,15 @@ export class TFSData {
 
   public static fromInterface(
     flight_data: FlightData[],
-    trip: "round-trip" | "one-way" | "multi-city",
+    trip: TripType,
     passengers: Passengers,
-    seat: "economy" | "premium-economy" | "business" | "first",
+    seat: SeatType,
     max_stops?: number
   ): TFSData {
-    const seatMap = {
-      economy: Seat.ECONOMY,
-      "premium-economy": Seat.PREMIUM_ECONOMY,
-      business: Seat.BUSINESS,
-      first: Seat.FIRST,
-    };
-
-    const tripMap = {
-      "round-trip": Trip.ROUND_TRIP,
-      "one-way": Trip.ONE_WAY,
-      "multi-city": Trip.MULTI_CITY,
-    };
-
     return new TFSData(
       flight_data,
-      seatMap[seat],
-      tripMap[trip],
+      stringToSeat(seat),
+      stringToTrip(trip),
       passengers,
       max_stops
     );
